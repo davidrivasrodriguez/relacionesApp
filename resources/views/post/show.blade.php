@@ -12,6 +12,9 @@
             </div>
             <div class="card-footer text-muted text-end">
                 {{ $comment->nickname }}, {{ $comment->created_at->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y \a \l\a\s H:mm') }}
+                @if($comment->created_at->diffInMinutes(now()) < 10)
+                    <a href="{{ route('comment.edit', ['comment' => $comment->id]) }}">Editar</a>
+                @endif
             </div>
         </div>
         <hr>

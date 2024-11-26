@@ -63,15 +63,28 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        //
+        return view('comment.edit', ['comment' => $comment]);
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(Request $request, Comment $comment)
     {
-        //
+        $request->validate([
+            'mail' => 'required|min:6|max:100',
+            'text' => 'required|min:10',
+        ]);
+    
+        if ($comment->mail !== $request->mail) {
+            return back()->withErrors(['error' => 'The email does not match the original email.']);
+        }
+    
+        if ($comment->created_at->diffInMinutes(now()) >= 10) {
+            return back()->withErrors(['error' => 'You cannot edit the comment after 10 minutes.']);
+        }
+    
+        $comment->text = $request->text;
+        $comment->save();
+    
+        return redirect()->route('post.show', ['post' => $comment->post_id])->with('message', 'Comment updated successfully.');
     }
 
     /**

@@ -13,3 +13,6 @@ Route::get('/', [PostController::class, 'index'])->name('post.index');
 Route::resource('post', PostController::class);
 Route::post('post/{post}/comment', [PostController::class, 'commentStore'])->name('post.comment');
 Route::resource('comment', CommentController::class);
+
+Route::get('comment/{comment}/edit', [CommentController::class, 'edit'])->name('comment.edit');
+Route::post('comment/{comment}/update', [CommentController::class, 'update'])->name('comment.update');
