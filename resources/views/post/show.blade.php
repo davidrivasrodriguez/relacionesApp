@@ -11,9 +11,10 @@
                 <p class="card-text">{{ $comment->text }}</p>
             </div>
             <div class="card-footer text-muted text-end">
-                {{ $comment->nickname }}, {{ $comment->created_at->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y \a \l\a\s H:mm') }}
                 @if($comment->created_at->diffInMinutes(now()) < 10)
-                    <a href="{{ route('comment.edit', ['comment' => $comment->id]) }}">Editar</a>
+                    <a href="{{ route('comment.edit', ['comment' => $comment->id]) }}">{{ $comment->nickname }}</a>, {{ $comment->created_at->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y \a \l\a\s H:mm') }}
+                @else
+                {{ $comment->nickname }}, {{ $comment->created_at->locale('es')->isoFormat('dddd D \d\e MMMM \d\e\l Y \a \l\a\s H:mm') }}
                 @endif
             </div>
         </div>

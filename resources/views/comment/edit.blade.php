@@ -5,7 +5,7 @@
         @csrf
         <div class="mb-3">
             <label for="mail" class="form-label">Email</label>
-            <input type="email" class="form-control" id="mail" name="mail" required value="{{ $comment->mail }}">
+            <input type="email" class="form-control" id="mail" name="mail" required value="" placeholder="Enter your Email to verify the edition">
         </div>
         <div class="mb-3">
             <label for="text" class="form-label">Comment</label>
