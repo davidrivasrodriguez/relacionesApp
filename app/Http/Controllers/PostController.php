@@ -77,7 +77,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('post.edit', compact('post'));
+        return view('post.edit', ['post' => $post]);
     }
 
     /**
@@ -85,17 +85,17 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|max:255',
-            'body' => 'required',
+        $validated = $request->validate([
+            'enter'   =>  'required|min:60|max:250|unique:post,enter,' . $post->id,
+            'text'     =>  'required|min:100',
+            'title'    => 'required|min:25|max:60|unique:post,title,' . $post->id,
         ]);
-
+    
         try {
-            $post->update($validatedData);
-            return redirect()->route('posts.index')
-                             ->with('success', 'Post actualizado exitosamente.');
+            $post->update($validated);
+            return redirect()->route('post.show', ['post' => $post->id])->with('message', 'Post updated propertly.');
         } catch (\Exception $e) {
-            return back()->withErrors(['error' => 'No se pudo actualizar el post.']);
+            return back()->withInput()->withErrors(['error' => 'Cannot update the post.']);
         }
     }
 

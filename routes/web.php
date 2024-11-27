@@ -16,3 +16,6 @@ Route::resource('comment', CommentController::class);
 
 Route::get('comment/{comment}/edit', [CommentController::class, 'edit'])->name('comment.edit');
 Route::post('comment/{comment}/update', [CommentController::class, 'update'])->name('comment.update');
+
+Route::get('post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
+Route::post('post/{post}/update', [PostController::class, 'update'])->name('post.update');

@@ -5,6 +5,12 @@
 
     <hr>
 
+    <div class="text-end">
+        <a href="{{ route('post.edit', ['post' => $post->id]) }}" class="btn btn-primary">Edit Post</a>
+    </div>
+
+    <hr>
+
     @foreach($post->comments as $comment)
         <div class="card">
             <div class="card-body">
@@ -22,7 +28,8 @@
     @endforeach
 
     <hr>
-
+    
+    <!--
     <form action="{{ route('comment.store') }}" method="post">
     @csrf
         <input type="hidden" id="post_id" name="post_id" value="{{ $post->id }}">
@@ -46,13 +53,13 @@
         </div>
     </form>
 
-    <form action="{{ url('post/' . $post->id . '/comment') }}" method="post">
-    </form>
+    <form action="{{ url('post/' . $post->id . '/comment') }}" method="post"></form>
+    -->
     <form action="{{ route('post.comment', ['post' => $post->id]) }}" method="post">
     @csrf
         <input type="hidden" id="post_id2" name="post_id" value="{{ $post->id }}">
         
-        <div class="mb-3">
+        <div class="mb-3 mt-5">
             <label for="mail2" class="form-label">Email</label>
             <input type="email" class="form-control" id="mail2" name="mail" minlenght="6" maxlength="100" required value="{{ old('mail') }}" placeholder="Enter your Email">
         </div>
