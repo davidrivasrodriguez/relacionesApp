@@ -14,7 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy('id', 'desc')->get();
+        // $posts = Post::orderBy('id', 'desc')->get();
+        $posts = Post::orderBy('id', 'desc')->paginate(3);
         return view('post.index', ['posts' => $posts]);
     }
 
@@ -85,14 +86,14 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $validated = $request->validate([
+        $request->validate([
             'enter'   =>  'required|min:60|max:250|unique:post,enter,' . $post->id,
             'text'     =>  'required|min:100',
             'title'    => 'required|min:25|max:60|unique:post,title,' . $post->id,
         ]);
     
         try {
-            $post->update($validated);
+            $post->update($request->all());
             return redirect()->route('post.show', ['post' => $post->id])->with('message', 'Post updated propertly.');
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['error' => 'Cannot update the post.']);
